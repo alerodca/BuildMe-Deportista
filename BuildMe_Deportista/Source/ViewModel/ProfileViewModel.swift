@@ -34,7 +34,7 @@ class ProfileViewModel {
     func observeAuthState() {
         Auth.auth().addStateDidChangeListener { (auth, user) in
             if let user = user { // user.uid
-                let ref = self.db.child(Constants.usersChild).child(user.uid)
+                let ref = self.db.child(Constants.athleteChild).child(user.uid)
                 ref.observe(.value) { (snapshot) in
                     guard let value = snapshot.value as? [String: Any] else { return }
                     if let user = self.castToUser(from: value) {
@@ -55,7 +55,7 @@ class ProfileViewModel {
     
     func getUser(completion: @escaping (User?) -> Void) {
         guard let uid = uid else { return completion(nil) }
-        let ref = db.child(Constants.usersChild).child(uid)
+        let ref = db.child(Constants.athleteChild).child(uid)
         ref.observe(.value) { (snapshot) in
             guard let value = snapshot.value as? [String: Any] else {
                 completion(nil)
@@ -100,7 +100,7 @@ class ProfileViewModel {
             let userToDictionary = user.toDictionary()
             
             if userToDictionary != nil {
-                db.child(Constants.usersChild).child(uid!).updateChildValues(userToDictionary) { error, _ in
+                db.child(Constants.athleteChild).child(uid!).updateChildValues(userToDictionary) { error, _ in
                     if let error = error {
                         print("Error actualizando datos: \(error.localizedDescription)")
                     } else {

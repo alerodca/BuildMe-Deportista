@@ -54,7 +54,7 @@ class TabBarController: UITabBarController {
 
 extension TabBarController: ControllerDelegate {
     func presentLoginScreen() {
-        let controller = LoginViewController()
+        let controller = SignupViewController() //LoginViewController()
         let nav = UINavigationController(rootViewController: controller)
         nav.modalPresentationStyle = .fullScreen
         self.present(nav, animated: true)

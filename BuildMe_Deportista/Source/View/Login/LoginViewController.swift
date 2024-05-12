@@ -16,6 +16,8 @@ class LoginViewController: UIViewController {
     
     // MARK: - Variables
     let viewmodel = LoginViewModel()
+    var iconClick = false
+    var imageIcon = UIImageView()
     
     // MARK: - Lifecycle
     override func viewDidLoad() {
@@ -28,8 +30,28 @@ class LoginViewController: UIViewController {
     // MARK: - Functions
     private func initialConfigure() {
         view.applyBlueRedGradient()
-        usernameTextField.setupLeftSideImage(systemImageNamed: "envelope")
-        passwordTextFild.setupLeftSideImage(systemImageNamed: "lock")
+        
+        imageIcon.image = UIImage(named: "closeEye")
+        let contentView = UIView()
+        contentView.addSubview(imageIcon)
+        contentView.frame = CGRect(
+            x: 0,
+            y: 0,
+            width: UIImage(named: "eyeClose")!.size.width,
+            height: UIImage(named: "eyeClose")!.size.height
+        )
+        imageIcon.frame = CGRect(
+            x: -10,
+            y: 0,
+            width: UIImage(named: "eyeClose")!.size.width,
+            height: UIImage(named: "eyeClose")!.size.height
+        )
+        passwordTextFild.rightView = contentView
+        passwordTextFild.rightViewMode = .always
+        
+        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(imageTapped(tapGestureRecognizer:)))
+        imageIcon.isUserInteractionEnabled = true
+        imageIcon.addGestureRecognizer(tapGestureRecognizer)
         
         usernameTextField.delegate = self
         passwordTextFild.delegate = self
@@ -42,6 +64,19 @@ class LoginViewController: UIViewController {
     }
     @IBAction func navigateToCreateAccount(_ sender: UIButton) {
         viewmodel.navigatoToSignUp()
+    }
+    @objc func imageTapped(tapGestureRecognizer: UITapGestureRecognizer) {
+        let tappedImage = tapGestureRecognizer.view as! UIImageView
+        
+        if iconClick {
+            iconClick = false
+            tappedImage.image = UIImage(named: "eyeOpen")
+            passwordTextFild.isSecureTextEntry = false
+        } else {
+            iconClick = true
+            tappedImage.image = UIImage(named: "eyeClose")
+            passwordTextFild.isSecureTextEntry = true
+        }
     }
 }
 
