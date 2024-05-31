@@ -22,7 +22,7 @@ class ProfileViewController: UIViewController {
     
     // MARK: - Variables
     let viewmodel = ProfileViewModel()
-    var user: User?
+    var user: Athlete?
     var isEditingProfile = false
     
     // MARK: - Lifecycle
@@ -60,7 +60,7 @@ class ProfileViewController: UIViewController {
         profileImageView.layer.borderWidth = 7
     }
     private func confUser() {
-        profileImageView.loadImage(from: user?.profileImageURL)
+        profileImageView.loadImage(from: user?.profileImageView)
         nameTextField.text = user?.name
         usernameTextField.text = user?.username
         emailTextField.text = user?.email
@@ -78,7 +78,7 @@ class ProfileViewController: UIViewController {
 }
 
 extension ProfileViewController: ProfileDelegate {
-    func updateUser(user: User) {
+    func updateUser(user: Athlete) {
         print("Implementando user en el viewcontroller")
         self.user = user
         DispatchQueue.main.async {

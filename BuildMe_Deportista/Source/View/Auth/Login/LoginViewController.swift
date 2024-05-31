@@ -31,7 +31,7 @@ class LoginViewController: UIViewController {
     private func initialConfigure() {
         view.applyBlueRedGradient()
         
-        imageIcon.image = UIImage(named: "closeEye")
+        imageIcon.image = UIImage(named: "eyeClose")
         let contentView = UIView()
         contentView.addSubview(imageIcon)
         contentView.frame = CGRect(

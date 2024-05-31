@@ -15,7 +15,7 @@ protocol ProfileDelegate {
     func editProfile()
     func presentLoginScreen()
     func showAlert(title: String, message: String)
-    func updateUser(user: User)
+    func updateUser(user: Athlete)
 }
 
 class ProfileViewModel {
@@ -24,7 +24,7 @@ class ProfileViewModel {
     var delegate: ProfileDelegate?
     let db = Database.database().reference()
     let uid = Auth.auth().currentUser?.uid
-    var actualUser: User?
+    var actualUser: Athlete?
     
     init() {
         observeAuthState()
@@ -35,7 +35,7 @@ class ProfileViewModel {
         Auth.auth().addStateDidChangeListener { (auth, user) in
             if let user = user { // user.uid
                 let ref = self.db.child(Constants.athleteChild).child(user.uid)
-                ref.observe(.value) { (snapshot) in
+                ref.observe(.value) { (snapshot, _)  in
                     guard let value = snapshot.value as? [String: Any] else { return }
                     if let user = self.castToUser(from: value) {
                         self.actualUser = user
@@ -53,10 +53,10 @@ class ProfileViewModel {
         delegate?.presentLogout()
     }
     
-    func getUser(completion: @escaping (User?) -> Void) {
+    func getUser(completion: @escaping (Athlete?) -> Void) {
         guard let uid = uid else { return completion(nil) }
         let ref = db.child(Constants.athleteChild).child(uid)
-        ref.observe(.value) { (snapshot) in
+        ref.observe(.value) { (snapshot, _) in
             guard let value = snapshot.value as? [String: Any] else {
                 completion(nil)
                 return
@@ -126,11 +126,11 @@ class ProfileViewModel {
     }
     
     // MARK: - Private Funcs
-    private func castToUser(from dictionary: [String: Any]) -> User? {
+    private func castToUser(from dictionary: [String: Any]) -> Athlete? {
         do {
             let data = try JSONSerialization.data(withJSONObject: dictionary, options: [])
             let decoder = JSONDecoder()
-            let user = try decoder.decode(User.self, from: data)
+            let user = try decoder.decode(Athlete.self, from: data)
             return user
         } catch {
             print("Error casting data to User: \(error)")

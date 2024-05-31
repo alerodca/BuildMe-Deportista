@@ -13,4 +13,11 @@ extension String {
         let emailPredicate = NSPredicate(format:"SELF MATCHES %@", emailRegex)
         return emailPredicate.evaluate(with: self)
     }
+    
+    static func removeOptional(from string: String) -> String {
+        let regex = try! NSRegularExpression(pattern: #"Optional\("(.*)"\)"#)
+        let range = NSRange(location: 0, length: string.utf16.count)
+        let formattedString = regex.stringByReplacingMatches(in: string, range: range, withTemplate: "$1")
+        return formattedString
+    }
 }

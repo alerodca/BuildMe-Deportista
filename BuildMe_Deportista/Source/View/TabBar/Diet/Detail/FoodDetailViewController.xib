@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="22155" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina5_9" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22131"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="FoodDetailViewController" customModule="BuildMe_Deportista" customModuleProvider="target">
+            <connections>
+                <outlet property="backView" destination="Tqp-id-Aki" id="dCH-3J-aYR"/>
+                <outlet property="recipeDataTextView" destination="qA3-YT-65U" id="6h7-2Q-F1h"/>
+                <outlet property="recipeImageView" destination="NVh-kn-PHZ" id="rBI-Am-Id4"/>
+                <outlet property="recipeNameLabel" destination="YvL-O0-46S" id="Z53-IM-70c"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Tqp-id-Aki">
+                    <rect key="frame" x="16" y="66" width="343" height="696"/>
+                    <subviews>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="4" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YvL-O0-46S">
+                            <rect key="frame" x="16" y="16" width="311" height="100"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="100" id="Zvs-nh-hJ7"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
+                            <nil key="textColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="NVh-kn-PHZ">
+                            <rect key="frame" x="16" y="132" width="311" height="220"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="220" id="znL-i9-Bdc"/>
+                            </constraints>
+                        </imageView>
+                        <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="qA3-YT-65U">
+                            <rect key="frame" x="16" y="368" width="311" height="312"/>
+                            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                            <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
+                            <color key="textColor" systemColor="labelColor"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                            <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                        </textView>
+                    </subviews>
+                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    <constraints>
+                        <constraint firstItem="qA3-YT-65U" firstAttribute="top" secondItem="NVh-kn-PHZ" secondAttribute="bottom" constant="16" id="7yb-22-fu6"/>
+                        <constraint firstAttribute="bottom" secondItem="qA3-YT-65U" secondAttribute="bottom" constant="16" id="CJX-ly-C8I"/>
+                        <constraint firstItem="qA3-YT-65U" firstAttribute="leading" secondItem="Tqp-id-Aki" secondAttribute="leading" constant="16" id="KWt-Rq-qFZ"/>
+                        <constraint firstItem="YvL-O0-46S" firstAttribute="leading" secondItem="Tqp-id-Aki" secondAttribute="leading" constant="16" id="P8A-hl-1gP"/>
+                        <constraint firstAttribute="trailing" secondItem="YvL-O0-46S" secondAttribute="trailing" constant="16" id="TLy-a2-4XN"/>
+                        <constraint firstItem="YvL-O0-46S" firstAttribute="top" secondItem="Tqp-id-Aki" secondAttribute="top" constant="16" id="VJ4-gU-V8y"/>
+                        <constraint firstItem="NVh-kn-PHZ" firstAttribute="top" secondItem="YvL-O0-46S" secondAttribute="bottom" constant="16" id="YX4-ZT-8Vt"/>
+                        <constraint firstAttribute="trailing" secondItem="qA3-YT-65U" secondAttribute="trailing" constant="16" id="aCm-ym-v7G"/>
+                        <constraint firstAttribute="trailing" secondItem="NVh-kn-PHZ" secondAttribute="trailing" constant="16" id="bsZ-gv-YKi"/>
+                        <constraint firstItem="NVh-kn-PHZ" firstAttribute="leading" secondItem="Tqp-id-Aki" secondAttribute="leading" constant="16" id="kf7-Fk-49j"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
+            <color key="backgroundColor" systemColor="systemBlueColor"/>
+            <constraints>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="Tqp-id-Aki" secondAttribute="bottom" constant="16" id="BUI-H5-B6H"/>
+                <constraint firstItem="Tqp-id-Aki" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="16" id="Qe0-oL-5fN"/>
+                <constraint firstItem="Tqp-id-Aki" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="16" id="aPr-hw-G72"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="Tqp-id-Aki" secondAttribute="trailing" constant="16" id="vT3-5x-peK"/>
+            </constraints>
+            <point key="canvasLocation" x="79.200000000000003" y="20.689655172413794"/>
+        </view>
+    </objects>
+    <resources>
+        <systemColor name="labelColor">
+            <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemBlueColor">
+            <color red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+    </resources>
+</document>

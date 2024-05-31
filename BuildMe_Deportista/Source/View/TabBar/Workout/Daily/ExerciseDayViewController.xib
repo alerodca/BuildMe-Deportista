@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="22155" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina5_9" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22131"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ExerciseDayViewController" customModule="BuildMe_Deportista" customModuleProvider="target">
+            <connections>
+                <outlet property="backView" destination="jkJ-IY-OFd" id="Hou-t1-4Lf"/>
+                <outlet property="completedDayButton" destination="079-A3-mxr" id="1g4-rS-iqH"/>
+                <outlet property="exerciseDayLabel" destination="cti-Qo-Itd" id="iyf-KQ-1Aj"/>
+                <outlet property="muscleGroupLabel" destination="qLa-KN-24G" id="oR0-8n-PIv"/>
+                <outlet property="tableView" destination="X8q-US-7UC" id="Xh9-Zb-gBN"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jkJ-IY-OFd">
+                    <rect key="frame" x="16" y="66" width="343" height="696"/>
+                    <subviews>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Rutina Diaria" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cIL-kn-NaA">
+                            <rect key="frame" x="16" y="16" width="311" height="40"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="40" id="urN-aH-mOz"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" type="boldSystem" pointSize="23"/>
+                            <nil key="textColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Rutina Diaria" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cti-Qo-Itd">
+                            <rect key="frame" x="16" y="574" width="311" height="40"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="40" id="jWx-ss-FSh"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                            <nil key="textColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="079-A3-mxr">
+                            <rect key="frame" x="16" y="630" width="311" height="50"/>
+                            <color key="backgroundColor" systemColor="systemGreenColor"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="50" id="rET-3O-gio"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" type="boldSystem" pointSize="19"/>
+                            <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                            <state key="normal" title="Marcar como Completado"/>
+                            <connections>
+                                <action selector="completedDayAction:" destination="-1" eventType="touchUpInside" id="QvY-j6-xyj"/>
+                            </connections>
+                        </button>
+                        <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="X8q-US-7UC">
+                            <rect key="frame" x="8" y="72" width="327" height="390"/>
+                            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        </tableView>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Rutina Diaria" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qLa-KN-24G">
+                            <rect key="frame" x="16" y="478" width="311" height="80"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="80" id="HLt-vU-66S"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                            <nil key="textColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                    </subviews>
+                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    <constraints>
+                        <constraint firstAttribute="trailing" secondItem="cIL-kn-NaA" secondAttribute="trailing" constant="16" id="314-ag-vwg"/>
+                        <constraint firstAttribute="trailing" secondItem="qLa-KN-24G" secondAttribute="trailing" constant="16" id="3uK-Mb-WjR"/>
+                        <constraint firstItem="cIL-kn-NaA" firstAttribute="top" secondItem="jkJ-IY-OFd" secondAttribute="top" constant="16" id="5AT-hL-ek8"/>
+                        <constraint firstItem="qLa-KN-24G" firstAttribute="top" secondItem="X8q-US-7UC" secondAttribute="bottom" constant="16" id="9SZ-1D-Eoe"/>
+                        <constraint firstItem="cti-Qo-Itd" firstAttribute="top" secondItem="qLa-KN-24G" secondAttribute="bottom" constant="16" id="C3s-cg-JAu"/>
+                        <constraint firstItem="079-A3-mxr" firstAttribute="leading" secondItem="jkJ-IY-OFd" secondAttribute="leading" constant="16" id="D7V-ns-ppe"/>
+                        <constraint firstAttribute="trailing" secondItem="X8q-US-7UC" secondAttribute="trailing" constant="8" id="G8t-db-ibf"/>
+                        <constraint firstAttribute="bottom" secondItem="079-A3-mxr" secondAttribute="bottom" constant="16" id="I2Y-Fq-ElX"/>
+                        <constraint firstItem="cti-Qo-Itd" firstAttribute="leading" secondItem="jkJ-IY-OFd" secondAttribute="leading" constant="16" id="SyR-ab-5e0"/>
+                        <constraint firstItem="079-A3-mxr" firstAttribute="top" secondItem="cti-Qo-Itd" secondAttribute="bottom" constant="16" id="UiT-dv-bqn"/>
+                        <constraint firstAttribute="trailing" secondItem="079-A3-mxr" secondAttribute="trailing" constant="16" id="Y8r-JY-RtQ"/>
+                        <constraint firstItem="X8q-US-7UC" firstAttribute="leading" secondItem="jkJ-IY-OFd" secondAttribute="leading" constant="8" id="hkX-p7-QfK"/>
+                        <constraint firstItem="X8q-US-7UC" firstAttribute="top" secondItem="cIL-kn-NaA" secondAttribute="bottom" constant="16" id="pyB-OL-lbO"/>
+                        <constraint firstAttribute="trailing" secondItem="cti-Qo-Itd" secondAttribute="trailing" constant="16" id="sJ0-d5-Aig"/>
+                        <constraint firstItem="qLa-KN-24G" firstAttribute="leading" secondItem="jkJ-IY-OFd" secondAttribute="leading" constant="16" id="x89-d6-lYX"/>
+                        <constraint firstItem="cIL-kn-NaA" firstAttribute="leading" secondItem="jkJ-IY-OFd" secondAttribute="leading" constant="16" id="zvA-0f-lYT"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
+            <color key="backgroundColor" systemColor="systemBrownColor"/>
+            <constraints>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="jkJ-IY-OFd" secondAttribute="bottom" constant="16" id="9Yg-zz-Oec"/>
+                <constraint firstItem="jkJ-IY-OFd" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="16" id="bCN-lb-rTi"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="jkJ-IY-OFd" secondAttribute="trailing" constant="16" id="gaX-a7-blS"/>
+                <constraint firstItem="jkJ-IY-OFd" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="16" id="rcV-Be-39w"/>
+            </constraints>
+            <point key="canvasLocation" x="33" y="21"/>
+        </view>
+    </objects>
+    <resources>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemBrownColor">
+            <color red="0.63529411759999999" green="0.51764705879999995" blue="0.36862745099999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="systemGreenColor">
+            <color red="0.20392156859999999" green="0.78039215689999997" blue="0.34901960780000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+    </resources>
+</document>
