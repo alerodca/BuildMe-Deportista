@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import JGProgressHUD
 
 class ExerciseDayViewController: UIViewController {
     
@@ -33,6 +34,9 @@ class ExerciseDayViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         initialConfigure()
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(handleTaskCompletedNotification), name: Notification.Name("WorkoutTaskCompletedSuccessfully"), object: nil)
+            NotificationCenter.default.addObserver(self, selector: #selector(handleDuplicateTaskNotification), name: Notification.Name("WorkoutDuplicateTaskDetected"), object: nil)
     }
     
     // MARK: - Actions & Selectors
@@ -40,8 +44,23 @@ class ExerciseDayViewController: UIViewController {
         dismiss(animated: true, completion: nil)
     }
     
-    @IBAction func completedDayAction(_ sender: UIButton) {
+    @IBAction private func completedDayAction(_ sender: UIButton) {
         completedDayAlert(on: self)
+    }
+    
+    @objc private func handleDuplicateTaskNotification() {
+        showAlert(title: "Error", message: "Ya existe un dato con la misma fecha y tipo de tarea", isError: true)
+    }
+    
+    @objc private func handleTaskCompletedNotification() {
+        showAlert(title: "Éxito", message: "Datos subidos exitosamente", isError: false)
+    }
+    
+    @objc private func showTaskCompleted() {
+        let vc = InfoTaskViewController()
+        let navController = UINavigationController(rootViewController: vc)
+        navController.modalPresentationStyle = .fullScreen
+        present(navController, animated: true)
     }
     
     // MARK: - Private Functions
@@ -55,6 +74,14 @@ class ExerciseDayViewController: UIViewController {
             [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 16), NSAttributedString.Key.foregroundColor: UIColor.white],
             for: .normal)
         navigationItem.leftBarButtonItem = backButton
+        
+        let infoTaskImage = UIImage(systemName: "checkmark.circle")
+        let infoTaskButton = UIBarButtonItem(image: infoTaskImage, style: .plain, target: self, action: #selector(showTaskCompleted))
+        infoTaskButton.tintColor = .white
+        infoTaskButton.setTitleTextAttributes(
+            [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 16), NSAttributedString.Key.foregroundColor: UIColor.white],
+            for: .normal)
+        navigationItem.rightBarButtonItem = infoTaskButton
         
         backView.layer.cornerRadius = 15
         backView.layer.masksToBounds = true
@@ -72,16 +99,35 @@ class ExerciseDayViewController: UIViewController {
     
     private func completedDayAlert(on viewController: UIViewController) {
         // Instanciar el PopupViewController
-        let popupVC = PopupViewController()
+        let popupVC = PopupViewController(typeTask: .workout)
         
         // Configurar el estilo de presentación del popup
-        popupVC.modalPresentationStyle = .overFullScreen // Para que el fondo se mantenga semitransparente
+        popupVC.modalPresentationStyle = .overFullScreen
         
         // Presentar el popup
         present(popupVC, animated: true, completion: nil)
     }
     
-    
+    private func showAlert(title: String, message: String, isError: Bool) {
+        DispatchQueue.main.async {
+            let hud = JGProgressHUD(style: .dark)
+            
+            // Configurar el estilo del indicador según si es un error o no
+            hud.indicatorView = isError ? JGProgressHUDErrorIndicatorView() : JGProgressHUDSuccessIndicatorView()
+            
+            hud.textLabel.text = title
+            hud.detailTextLabel.text = message
+            
+            // Bloquear todas las interacciones hasta que se cierre el alert
+            hud.interactionType = .blockAllTouches
+            
+            // Mostrar el alert en la vista actual
+            hud.show(in: self.view)
+            
+            // Desaparecer después de un tiempo determinado
+            hud.dismiss(afterDelay: 3, animated: true)
+        }
+    }
 }
 
 // MARK: - UITableViewDataSource, UITableViewDelegate

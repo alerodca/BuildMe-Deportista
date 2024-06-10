@@ -53,8 +53,10 @@ class DietViewController: UIViewController {
         // Centrar la etiqueta dentro de backView
         NSLayoutConstraint.activate([
             dietLabel.centerXAnchor.constraint(equalTo: backView.centerXAnchor),
-            dietLabel.centerYAnchor.constraint(equalTo: backView.centerYAnchor)
+            dietLabel.centerYAnchor.constraint(equalTo: backView.centerYAnchor),
+            
         ])
+        
     }
     
     private func setupRoutineDetails() {

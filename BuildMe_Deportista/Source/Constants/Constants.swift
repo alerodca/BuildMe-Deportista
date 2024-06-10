@@ -15,4 +15,5 @@ class Constants {
     static let healthyRecipesChild = "healthyRecipesImages"
     static let healthyRecipes = "healthyRecipes"
     static let profileImagesChild = "images"
+    static let CompletedTasksChild = "CompletedTasks"
 }

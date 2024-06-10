@@ -44,7 +44,7 @@
                     <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
                 </textField>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5pr-EM-h1Q">
-                    <rect key="frame" x="24" y="497" width="345" height="50"/>
+                    <rect key="frame" x="72" y="561" width="249" height="50"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="50" id="6ef-tm-5hU"/>
                     </constraints>
@@ -81,19 +81,32 @@
                         <constraint firstAttribute="height" constant="50" id="avI-tt-iiC"/>
                     </constraints>
                 </stackView>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Hms-vW-M5P">
+                    <rect key="frame" x="80" y="497" width="233" height="32"/>
+                    <fontDescription key="fontDescription" type="boldSystem" pointSize="16"/>
+                    <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                    <state key="normal" title="Olvidé mi contraseña"/>
+                    <connections>
+                        <action selector="navigateToForgotPassword:" destination="-1" eventType="touchUpInside" id="yeS-dT-6lk"/>
+                    </connections>
+                </button>
             </subviews>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
-            <color key="backgroundColor" systemColor="systemBlueColor"/>
+            <color key="backgroundColor" systemColor="systemGray2Color"/>
             <constraints>
+                <constraint firstItem="5pr-EM-h1Q" firstAttribute="top" secondItem="Hms-vW-M5P" secondAttribute="bottom" constant="32" id="1KM-5p-NPI"/>
                 <constraint firstItem="JTH-nt-8N2" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="72" id="6TZ-BP-JjZ"/>
-                <constraint firstItem="5pr-EM-h1Q" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="24" id="6bZ-h6-OGe"/>
-                <constraint firstItem="5pr-EM-h1Q" firstAttribute="top" secondItem="0tM-ao-uf3" secondAttribute="bottom" constant="32" id="ESF-Mr-Nmc"/>
+                <constraint firstItem="5pr-EM-h1Q" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="72" id="6bZ-h6-OGe"/>
                 <constraint firstItem="0tM-ao-uf3" firstAttribute="top" secondItem="Jyf-Fd-Zl9" secondAttribute="bottom" constant="24" id="F72-KE-sEn"/>
                 <constraint firstItem="0tM-ao-uf3" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="24" id="FHt-Wp-FUe"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="Jyf-Fd-Zl9" secondAttribute="trailing" constant="24" id="Ggl-eu-0QD"/>
-                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="5pr-EM-h1Q" secondAttribute="trailing" constant="24" id="IA3-AQ-LnO"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="5pr-EM-h1Q" secondAttribute="trailing" constant="72" id="IA3-AQ-LnO"/>
                 <constraint firstItem="Jyf-Fd-Zl9" firstAttribute="top" secondItem="JTH-nt-8N2" secondAttribute="bottom" constant="32" id="Qyg-bG-uYH"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="0tM-ao-uf3" secondAttribute="trailing" constant="24" id="TNB-Ka-LwV"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="Hms-vW-M5P" secondAttribute="trailing" constant="80" id="Xhg-a3-fui"/>
+                <constraint firstItem="Hms-vW-M5P" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="80" id="Y5h-d1-oVx"/>
+                <constraint firstItem="Hms-vW-M5P" firstAttribute="top" secondItem="0tM-ao-uf3" secondAttribute="bottom" constant="32" id="c6l-aI-NxP"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="YQx-Rl-70o" secondAttribute="bottom" id="eNw-sF-RWE"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="JTH-nt-8N2" secondAttribute="trailing" constant="72" id="kYl-Rr-cVA"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="YQx-Rl-70o" secondAttribute="trailing" constant="16" id="qnj-31-gcH"/>
@@ -115,8 +128,8 @@
     </objects>
     <resources>
         <image name="LogoTransparente" width="1024" height="1024"/>
-        <systemColor name="systemBlueColor">
-            <color red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        <systemColor name="systemGray2Color">
+            <color red="0.68235294120000001" green="0.68235294120000001" blue="0.69803921570000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

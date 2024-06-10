@@ -6,9 +6,7 @@
 //
 
 import UIKit
-import FirebaseAuth
 import JGProgressHUD
-import FirebaseDatabase
 
 class PopupViewController: UIViewController {
     
@@ -17,11 +15,17 @@ class PopupViewController: UIViewController {
     private let datePicker = UIDatePicker()
     private let placeholderText = "Si tienes alguna observación puedes ponerla aquí..."
     let placeholderColor = UIColor.lightGray
-    let typeTask: TaskType
+    
+    private var viewModel: PopupViewModel
     
     // MARK: - Constructor
     init(typeTask: TaskType) {
-        self.typeTask = typeTask
+        self.viewModel = PopupViewModel(typeTask: typeTask)
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    init(completedTask: TaskCompleted?) {
+        self.viewModel = PopupViewModel(completedTask: completedTask)
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -33,32 +37,35 @@ class PopupViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupViews()
-        
         configureTextview()
+        bindViewModel()
+        
+        if let completedTask = viewModel.completedTask {
+            textView.text = completedTask.observations
+            textView.textColor = .black
+            datePicker.date = completedTask.date
+        } else {
+            textView.text = placeholderText
+            textView.textColor = placeholderColor
+        }
     }
-    
-    
     
     // MARK: - Private Methods
     private func setupViews() {
-        // Configurar el fondo semitransparente
         view.backgroundColor = UIColor.black.withAlphaComponent(0.5)
         
-        // Configurar la vista del popup
         let popupView = UIView()
         popupView.translatesAutoresizingMaskIntoConstraints = false
         popupView.backgroundColor = .white
         popupView.layer.cornerRadius = 10
         view.addSubview(popupView)
         
-        // Agregar constraints para centrar el popupView y definir su tamaño
         NSLayoutConstraint.activate([
             popupView.widthAnchor.constraint(equalToConstant: 300),
             popupView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             popupView.centerYAnchor.constraint(equalTo: view.centerYAnchor)
         ])
         
-        // Título en negrita
         let titleLabel = UILabel()
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         titleLabel.text = "¡Guardar como completado!"
@@ -66,7 +73,6 @@ class PopupViewController: UIViewController {
         titleLabel.textAlignment = .center
         popupView.addSubview(titleLabel)
         
-        // TextField
         textView.translatesAutoresizingMaskIntoConstraints = false
         textView.textAlignment = .justified
         textView.font = UIFont.systemFont(ofSize: 14)
@@ -75,7 +81,6 @@ class PopupViewController: UIViewController {
         textView.layer.cornerRadius = 5.0
         popupView.addSubview(textView)
         
-        // DatePicker compacto
         datePicker.translatesAutoresizingMaskIntoConstraints = false
         datePicker.datePickerMode = .date
         if #available(iOS 13.4, *) {
@@ -83,29 +88,26 @@ class PopupViewController: UIViewController {
         }
         popupView.addSubview(datePicker)
         
-        // Botón rojo (Cancelar)
         let cancelButton = UIButton()
         cancelButton.translatesAutoresizingMaskIntoConstraints = false
         cancelButton.setTitle("Cancelar", for: .normal)
         cancelButton.setTitleColor(.white, for: .normal)
         cancelButton.backgroundColor = .red
         cancelButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 17)
-        cancelButton.layer.cornerRadius = 10 // Agregar borde al botón
+        cancelButton.layer.cornerRadius = 10
         cancelButton.addTarget(self, action: #selector(cancelButtonTapped), for: .touchUpInside)
         popupView.addSubview(cancelButton)
         
-        // Botón azul (Guardar)
         let saveButton = UIButton()
         saveButton.translatesAutoresizingMaskIntoConstraints = false
         saveButton.setTitle("Guardar", for: .normal)
         saveButton.setTitleColor(.white, for: .normal)
         saveButton.backgroundColor = .blue
         saveButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 17)
-        saveButton.layer.cornerRadius = 10 // Agregar borde al botón
+        saveButton.layer.cornerRadius = 10
         saveButton.addTarget(self, action: #selector(saveButtonTapped), for: .touchUpInside)
         popupView.addSubview(saveButton)
         
-        // Agregar constraints
         NSLayoutConstraint.activate([
             titleLabel.topAnchor.constraint(equalTo: popupView.topAnchor, constant: 16),
             titleLabel.leadingAnchor.constraint(equalTo: popupView.leadingAnchor, constant: 16),
@@ -117,7 +119,7 @@ class PopupViewController: UIViewController {
             textView.heightAnchor.constraint(equalToConstant: 80),
             
             datePicker.topAnchor.constraint(equalTo: textView.bottomAnchor, constant: 16),
-            datePicker.centerXAnchor.constraint(equalTo: popupView.centerXAnchor), // Centrar horizontalmente
+            datePicker.centerXAnchor.constraint(equalTo: popupView.centerXAnchor),
             
             cancelButton.topAnchor.constraint(equalTo: datePicker.bottomAnchor, constant: 16),
             cancelButton.leadingAnchor.constraint(equalTo: popupView.leadingAnchor, constant: 16),
@@ -137,100 +139,37 @@ class PopupViewController: UIViewController {
     
     private func configureTextview() {
         textView.delegate = self
-        textView.text = placeholderText
-        textView.textColor = placeholderColor
     }
     
-    // MARK: - Button Actions
+    private func bindViewModel() {
+        viewModel.onTaskSaved = { [weak self] in
+            DispatchQueue.main.async {
+                self?.dismiss(animated: true, completion: nil)
+            }
+        }
+        
+        viewModel.onError = { [weak self] errorMessage in
+            DispatchQueue.main.async {
+                let alert = UIAlertController(title: "Error", message: errorMessage, preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                self?.present(alert, animated: true, completion: nil)
+            }
+        }
+    }
+    
+    // MARK: - Actions
     @objc private func cancelButtonTapped() {
         dismiss(animated: true, completion: nil)
     }
     
     @objc private func saveButtonTapped() {
-        var enteredText = textView.text ?? ""
-        if enteredText == placeholderText || enteredText == "" {
-            enteredText = "Ninguna observación asignada"
-        }
-        
-        let selectedDate = datePicker.date
-        guard let uid = Auth.auth().currentUser?.uid else {
-            print("Error: No hay ningún usuario autenticado")
-            return
-        }
-        
-        // Formatear la fecha
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd" // Formato de fecha deseado
-        let formattedDate = dateFormatter.string(from: selectedDate)
-        
-        print(self.typeTask)
-        
-        let taskCompleted = TaskCompleted(typeTask: self.typeTask, date: selectedDate, observations: enteredText, uid: uid)
-        let taskDictionary = taskCompleted.toDictionary()
-        
-        print(taskDictionary)
-        
-        // Obtener una referencia a la base de datos
-        let databaseRef = Database.database().reference()
-        
-        // Acceder al nodo "CompletedTasks" y traer todos los datos
-        databaseRef.child("CompletedTasks").observeSingleEvent(of: .value) { (snapshot) in
-            var duplicateFound = false
-            
-            // Iterar a través de todos los elementos en "CompletedTasks"
-            for child in snapshot.children {
-                if let childSnapshot = child as? DataSnapshot,
-                   let taskData = childSnapshot.value as? [String: Any],
-                   let date = taskData["date"] as? String,
-                   let typeTaskString = taskData["typeTask"] as? String,
-                   let typeTask = TaskType(rawValue: typeTaskString),
-                   typeTask == self.typeTask && date == formattedDate {
-                    // Se ha encontrado un duplicado
-                    duplicateFound = true
-                }
-            }
-            
-            if duplicateFound {
-                if self.typeTask == .diet {
-                    NotificationCenter.default.post(name: Notification.Name("DietDuplicateTaskDetected"), object: nil)
-                } else {
-                    NotificationCenter.default.post(name: Notification.Name("WorkoutDuplicateTaskDetected"), object: nil)
-                }
-            } else {
-                // No se encontró ningún duplicado, subir el nuevo objeto a Firebase Database
-                let completedTasksRef = databaseRef.child("CompletedTasks").childByAutoId()
-                
-                // Subir el diccionario a Firebase Database
-                completedTasksRef.setValue(taskDictionary) { (error, _) in
-                    if let error = error {
-                        print("Error al subir los datos: \(error.localizedDescription)")
-                    } else {
-                        print("Datos subidos exitosamente")
-                    }
-                }
-                
-                if self.typeTask == .diet {
-                    NotificationCenter.default.post(name: Notification.Name("DietTaskCompletedSuccessfully"), object: nil)
-                } else {
-                    NotificationCenter.default.post(name: Notification.Name("WorkoutTaskCompletedSuccessfully"), object: nil)
-                }
-            }
-        }
-        
-        dismiss(animated: true, completion: nil)
+        viewModel.observations = textView.text
+        viewModel.selectedDate = datePicker.date
+        viewModel.saveTask()
     }
 }
 
 extension PopupViewController: UITextViewDelegate {
-    func textViewDidChange(_ textView: UITextView) {
-        if textView.text == placeholderText && (textView.selectedRange.location == 0 || textView.selectedRange.location == NSNotFound) {
-            // Si el texto es igual al placeholder y el cursor está al inicio o al final
-            textView.textColor = placeholderColor
-        } else {
-            textView.textColor = .black // Restaurar color de texto normal
-        }
-    }
-    
     func textViewDidBeginEditing(_ textView: UITextView) {
         if textView.text == placeholderText {
             textView.text = ""

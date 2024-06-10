@@ -53,7 +53,7 @@ class WorkoutViewController: UIViewController {
         // Centrar la etiqueta dentro de backView
         NSLayoutConstraint.activate([
             routineLabel.centerXAnchor.constraint(equalTo: backView.centerXAnchor),
-            routineLabel.centerYAnchor.constraint(equalTo: backView.centerYAnchor)
+            routineLabel.centerYAnchor.constraint(equalTo: backView.centerYAnchor),
         ])
     }
     

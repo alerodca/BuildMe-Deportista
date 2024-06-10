@@ -106,7 +106,7 @@ class SignupViewModel: NSObject {
         
         uploadImageToFirebase(image: image, completion: { imageUrl in
             self.imageURL = imageUrl
-            self.delegate?.showAlert(title: "Imagen", message: "Imagen guardada.")
+            self.delegate?.showAlert(title: "Imagen", message: "Imagen guardada.", isError: false)
         })
     }
     func popToLogin() {
@@ -115,54 +115,87 @@ class SignupViewModel: NSObject {
     
     func createAccount() {
         pickerDelegate?.disableButtons()
-        guard let name = name, !name.isEmpty,
-              let gender = gender, !gender.isEmpty,
-              let dateBirth = dateBirth, !dateBirth.isEmpty,
-              let email = email, !email.isEmpty, email.isValidEmail(),
-              let phone = phone, !phone.isEmpty,
-              let username = username, !username.isEmpty,
-              let password = password, !password.isEmpty,
-              let trainingGoal = trainingGoal, !trainingGoal.isEmpty,
-              let schedule = schedule, !schedule.isEmpty,
-              let geographicAvailable = geographicAvailable, !geographicAvailable.isEmpty,
-              let clinicHistory = clinicHistory, !clinicHistory.isEmpty,
-              let injuryHistory = injuryHistory, !clinicHistory.isEmpty,
-              let physicCondition = physicCondition, !physicCondition.isEmpty else {
-            delegate?.showAlert(title: "Error", message: "Todos los campos deben estar completos.")
+        
+        var missingFields = [String]()
+        
+        if name == nil || name!.isEmpty {
+            missingFields.append("nombre")
+        }
+        if gender == nil || gender!.isEmpty {
+            missingFields.append("género")
+        }
+        if dateBirth == nil || dateBirth!.isEmpty {
+            missingFields.append("fecha de nacimiento")
+        }
+        if email == nil || email!.isEmpty || !email!.isValidEmail() {
+            missingFields.append("correo electrónico")
+        }
+        if phone == nil || phone!.isEmpty {
+            missingFields.append("teléfono")
+        }
+        if username == nil || username!.isEmpty {
+            missingFields.append("nombre de usuario")
+        }
+        if password == nil || password!.isEmpty {
+            missingFields.append("contraseña")
+        }
+        if trainingGoal == nil || trainingGoal!.isEmpty {
+            missingFields.append("objetivo de entrenamiento")
+        }
+        if schedule == nil || schedule!.isEmpty {
+            missingFields.append("horario")
+        }
+        if geographicAvailable == nil || geographicAvailable!.isEmpty {
+            missingFields.append("disponibilidad geográfica")
+        }
+        if clinicHistory == nil || clinicHistory!.isEmpty {
+            missingFields.append("historial clínico")
+        }
+        if injuryHistory == nil || injuryHistory!.isEmpty {
+            missingFields.append("historial de lesiones")
+        }
+        if physicCondition == nil || physicCondition!.isEmpty {
+            missingFields.append("condición física")
+        }
+
+        if !missingFields.isEmpty {
+            let missingFieldsMessage = "Faltan los siguientes campos por completar: \(missingFields.joined(separator: ", "))."
+            print(missingFieldsMessage)
+            delegate?.showAlert(title: "Error", message: missingFieldsMessage, isError: true)
             pickerDelegate?.enableButtons()
             return
         }
         
         guard let profileImageURL = imageURL else {
-            delegate?.showAlert(title: "Error", message: "Debes seleccionar una imagen de perfil")
+            delegate?.showAlert(title: "Error", message: "Debes seleccionar una imagen de perfil", isError: true)
             pickerDelegate?.enableButtons()
             return
         }
         
-        Auth.auth().createUser(withEmail: email, password: password) { authResult, error in
+        Auth.auth().createUser(withEmail: email!, password: password!) { authResult, error in
             if let error = error {
                 self.showError(error: error as! AuthErrorCode)
             } else {
                 guard let uid = authResult?.user.uid else {
-                    self.delegate?.showAlert(title: "Error", message: "No se pudo obtener el UID del usuario.")
+                    self.delegate?.showAlert(title: "Error", message: "No se pudo obtener el UID del usuario.", isError: true)
                     self.pickerDelegate?.enableButtons()
                     return
                 }
-                if let passwordEncrypted = self.encryptPassword(password: password) {
+                if let passwordEncrypted = self.encryptPassword(password: self.password!) {
                     let user = Athlete(
-                        name: name,
-                        gender: gender,
-                        dateBirth: dateBirth,
-                        email: email,
-                        phone: phone,
-                        username: username,
-                        password: password,
-                        trainingGoal: trainingGoal,
-                        availableTime: schedule,
-                        location: geographicAvailable,
-                        clinicHistory: clinicHistory,
-                        injuriesHistory: injuryHistory,
-                        physicCondition: physicCondition,
+                        name: self.name!,
+                        gender: self.gender!,
+                        dateBirth: self.dateBirth!,
+                        email: self.email!,
+                        phone: self.phone!,
+                        username: self.username!,
+                        password: passwordEncrypted,
+                        trainingGoal: self.trainingGoal!,
+                        availableTime: self.schedule!,
+                        location: self.geographicAvailable!,
+                        clinicHistory: self.clinicHistory!,
+                        injuriesHistory: self.injuryHistory!,
+                        physicCondition: self.physicCondition!,
                         profileImageView: profileImageURL,
                         uid: uid,
                         routine: nil,
@@ -171,12 +204,13 @@ class SignupViewModel: NSObject {
                     self.pickerDelegate?.enableButtons()
                     self.delegate?.authComplete()
                 } else {
-                    self.delegate?.showAlert(title: "Error", message: "Hubo un error al encriptar la contraseña.")
+                    self.delegate?.showAlert(title: "Error", message: "Hubo un error al encriptar la contraseña.", isError: true)
                     self.pickerDelegate?.enableButtons()
                 }
             }
         }
     }
+
     
     // MARK: - Enum
     enum Gender: String {
@@ -239,7 +273,7 @@ class SignupViewModel: NSObject {
         default:
             errorMessage = "Se ha producido un error inesperado. Por favor, inténtalo de nuevo más tarde."
         }
-        delegate?.showAlert(title: "Error", message: errorMessage)
+        delegate?.showAlert(title: "Error", message: errorMessage, isError: true)
     }
     
     private func encryptPassword(password: String) -> String? {
@@ -254,7 +288,7 @@ class SignupViewModel: NSObject {
         let userDictionary = athlete.toDictionary()
         databaseRef.setValue(userDictionary) { error, refDatabase in
             if let error = error {
-                self.delegate?.showAlert(title: "Error", message: "Hubo un error al guardar los datos.")
+                self.delegate?.showAlert(title: "Error", message: "Hubo un error al guardar los datos.", isError: true)
             }
         }
     }

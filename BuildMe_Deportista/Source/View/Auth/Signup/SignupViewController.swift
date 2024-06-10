@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import JGProgressHUD
 
 class SignupViewController: UIViewController {
     
@@ -28,6 +29,7 @@ class SignupViewController: UIViewController {
     let viewmodel = SignupViewModel()
     let imageIcon = UIImageView()
     var iconClick = false
+    let hud = JGProgressHUD()
     
     // MARK: - Enums
     enum TrainingGoal: String, CaseIterable {
@@ -670,6 +672,37 @@ extension SignupViewController: UITextFieldDelegate {
 }
 
 extension SignupViewController: AuthControllerDelegate, ImagePickerDelegate {
+    func showAlert(title: String, message: String, isError: Bool) {
+        DispatchQueue.main.async {
+            let hud = JGProgressHUD()
+            hud.indicatorView = isError ? JGProgressHUDErrorIndicatorView() :
+            JGProgressHUDSuccessIndicatorView()
+            hud.textLabel.text = title
+            hud.detailTextLabel.text = message
+            hud.interactionType = .blockAllTouches
+            hud.show(in: self.view)
+            hud.dismiss(afterDelay: 3, animated: true)
+        }
+    }
+    
+    func showIndicator() {
+        DispatchQueue.main.async {
+            self.hud.textLabel.text = "Iniciando Sesión"
+            self.hud.detailTextLabel.text = "Espere por favor"
+            self.hud.show(in: self.view)
+        }
+    }
+    
+    func hideIndicator() {
+        DispatchQueue.main.async {
+            self.hud.dismiss(animated: true)
+        }
+    }
+    
+    func navigateToForgotPassword() {
+        print("navigate to forgot password")
+    }
+    
     func enableButtons() {
         uploadPhotoButton.isEnabled = true
         buttonAlreadyHaveAccount.isEnabled = true

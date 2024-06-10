@@ -67,3 +67,8 @@ enum MealType: String, Decodable {
     case snack = "Snack"
     case midMorningSnack = "Media Mañana"
 }
+
+enum TaskType: String, Codable {
+    case diet = "Planning Dieta Diario Completado"
+    case workout = "Día de Entrenamiento Completado"
+}

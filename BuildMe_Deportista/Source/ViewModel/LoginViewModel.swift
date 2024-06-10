@@ -6,12 +6,15 @@
 //
 
 import Foundation
-import FirebaseAuth
+import Firebase
 
 protocol AuthControllerDelegate: AnyObject {
-    func showAlert(title: String, message: String)
+    func showAlert(title: String, message: String, isError: Bool)
     func navigate()
     func authComplete()
+    func showIndicator()
+    func hideIndicator()
+    func navigateToForgotPassword()
 }
 
 class LoginViewModel {
@@ -22,16 +25,52 @@ class LoginViewModel {
     
     // MARK: - Functions
     func login(email: String?, password: String?) {
+        delegate?.showIndicator()
+
         guard let email = email, !email.isEmpty,
               let password = password, !password.isEmpty else {
-            delegate?.showAlert(title: "Error", message: "Por favor ingresa un email y una contraseña válidos")
+            delegate?.hideIndicator()
+            delegate?.showAlert(title: "Error", message: "Por favor ingresa un email y una contraseña válidos", isError: true)
             return
         }
-        Auth.auth().signIn(withEmail: email, password: password) { authResult, error in
-            if let error = error {
-                self.showError(error: error as! AuthErrorCode)
+
+        // Check user type (athlete or trainer) using Firebase Realtime Database
+        let databaseRef = Database.database().reference().child(Constants.athleteChild) // Assuming Constants.trainerChild points to the trainer node
+
+        databaseRef.observeSingleEvent(of: .value) { [weak self] snapshot in
+            guard let self = self else { return }
+            self.delegate?.hideIndicator() // Hide indicator after any Database operation
+
+            if !snapshot.exists() {
+                self.delegate?.showAlert(title: "Error", message: "No se encontraron datos de usuarios en la base de datos", isError: true)
+                return
             }
-            self.delegate?.authComplete()
+
+            var isTrainer = false
+            for child in snapshot.children {
+                if let childSnapshot = child as? DataSnapshot,
+                   let userData = childSnapshot.value as? [String: Any],
+                   let userEmail = userData["email"] as? String,
+                   userEmail == email {
+                    isTrainer = true
+                    break
+                }
+            }
+
+            if isTrainer {
+                // Attempt authentication if user is a trainer
+                Auth.auth().signIn(withEmail: email, password: password) { [weak self] authResult, error in
+                    guard let self = self else { return }
+
+                    if let error = error {
+                        self.showError(error: error as! AuthErrorCode)
+                    } else {
+                        self.delegate?.authComplete() // Successful login as trainer
+                    }
+                }
+            } else {
+                self.delegate?.showAlert(title: "Error", message: "Para acceder a la app debe ser un Deporstista", isError: true)
+            }
         }
     }
     
@@ -62,6 +101,6 @@ class LoginViewModel {
         default:
             errorMessage = "Se ha producido un error inesperado. Por favor, inténtalo de nuevo más tarde."
         }
-        delegate?.showAlert(title: "Error", message: errorMessage)
+        delegate?.showAlert(title: "Error", message: errorMessage, isError: true)
     }
 }

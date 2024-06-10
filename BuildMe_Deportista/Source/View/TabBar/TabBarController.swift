@@ -6,7 +6,9 @@
 //
 
 import UIKit
+import JGProgressHUD
 import FirebaseAuth
+import FirebaseDatabase
 
 protocol ControllerDelegate: AnyObject {
     func showAlert(title: String, message: String)
@@ -14,21 +16,53 @@ protocol ControllerDelegate: AnyObject {
 }
 
 class TabBarController: UITabBarController {
+    
+    var user: User?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         self.setupTabs()
-        
-        isUserLogged()
+        self.checkAuthenticationAndLoadUserInfo()
     }
     
-    private func isUserLogged() {
-        DispatchQueue.main.async {
-            if let uid = Auth.auth().currentUser?.uid {
-                self.showAlert(title: "User", message: uid)
-            } else {
-                self.presentLoginScreen()
+    private func checkAuthenticationAndLoadUserInfo() {
+        if let currentUser = Auth.auth().currentUser {
+            self.user = currentUser
+            self.getAndShowCurrentUserInfo()
+        } else {
+            DispatchQueue.main.async {
+                let controller = LoginViewController()
+                let nav = UINavigationController(rootViewController: controller)
+                nav.modalPresentationStyle = .fullScreen
+                self.present(nav, animated: true)
             }
+        }
+    }
+    
+    private func getAndShowCurrentUserInfo() {
+        guard let user = self.user else { return }
+        
+        let databaseRef = Database.database().reference().child("Users").child("Athlete").child(user.uid)
+        
+        databaseRef.observeSingleEvent(of: .value) { [weak self] snapshot in
+            guard let self = self else { return }
+            
+            if !snapshot.exists() {
+                print("User data not found")
+                return
+            }
+            
+            guard let userData = snapshot.value as? [String: Any] else {
+                print("Invalid user data format")
+                return
+            }
+            
+            guard let name = userData["name"] as? String else {
+                print("Missing name field in user data")
+                return
+            }
+            
+            self.showAlert(title: "Bienvenido \(name)", message: "¡Qué gusto volver a verte!")
         }
     }
     
@@ -37,7 +71,7 @@ class TabBarController: UITabBarController {
         let diet = self.createNav(with: "Dietas", and: UIImage(systemName: "carrot.fill"), vc: DietViewController())
         let profile = self.createNav(with: "Perfil", and: UIImage(systemName: "person.crop.circle"), vc: ProfileViewController())
         
-        self.setViewControllers([workout,diet,profile], animated: true)
+        self.setViewControllers([workout, diet, profile], animated: true)
         
         self.tabBar.backgroundColor = .white
         self.tabBar.tintColor = .black
@@ -61,9 +95,18 @@ extension TabBarController: ControllerDelegate {
     }
     
     func showAlert(title: String, message: String) {
-        let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
-        let okAction = UIAlertAction(title: "Aceptar", style: .default, handler: nil)
-        alertController.addAction(okAction)
-        present(alertController, animated: true, completion: nil)
+        DispatchQueue.main.async {
+            let hud = JGProgressHUD()
+            
+            if let image = UIImage(named: "LogoTransparente")?.scaled(to: CGSize(width: 150.0, height: 150.0)) {
+                hud.indicatorView = JGProgressHUDImageIndicatorView(image: image)
+            }
+            
+            hud.textLabel.text = title
+            hud.detailTextLabel.text = message
+            hud.interactionType = .blockAllTouches
+            hud.show(in: self.view)
+            hud.dismiss(afterDelay: 6, animated: true)
+        }
     }
 }
