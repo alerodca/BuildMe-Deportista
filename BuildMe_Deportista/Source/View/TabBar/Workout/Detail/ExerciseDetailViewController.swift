@@ -61,6 +61,7 @@ class ExerciseDetailViewController: UIViewController {
         
         exerciseNameLabel.text = exercise.name
         exerciseImageView.loadImage(from: exercise.image)
+        descriptionExerciseTextView.font = UIFont.boldSystemFont(ofSize: 16)
         descriptionExerciseTextView.text = exercise.description
         muscleLabel.text = "Músculo trabajado: \(exercise.muscleGroup.rawValue)"
         setsLabel.text = "Series: \(exercise.sets)"

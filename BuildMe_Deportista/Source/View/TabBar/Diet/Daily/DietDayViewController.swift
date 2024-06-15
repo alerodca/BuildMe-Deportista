@@ -99,8 +99,8 @@ class DietDayViewController: UIViewController {
     }
     
     private func formatNutritionalValues(_ values: NutritionalValues) -> NSAttributedString {
-        let boldFont = UIFont.boldSystemFont(ofSize: 14)
-        let normalFont = UIFont.systemFont(ofSize: 14)
+        let boldFont = UIFont.boldSystemFont(ofSize: 15)
+        let normalFont = UIFont.systemFont(ofSize: 15)
         
         let boldAttributes: [NSAttributedString.Key: Any] = [.font: boldFont]
         let normalAttributes: [NSAttributedString.Key: Any] = [.font: normalFont]
@@ -190,16 +190,16 @@ extension DietDayViewController: UITableViewDataSource, UITableViewDelegate {
         }
         
         cell.imageViewCell.loadImage(from: recipe.image)
-        let nameAttributedString = NSMutableAttributedString(string: "Nombre: ", attributes: [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 13)])
-        nameAttributedString.append(NSAttributedString(string: recipe.name))
+        let nameAttributedString = NSMutableAttributedString(string: "Nombre: ", attributes: [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 11)])
+        nameAttributedString.append(NSMutableAttributedString(string: recipe.name, attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 11)]))
         cell.titleOneLabel.attributedText = nameAttributedString
         
-        let foodAttributedString = NSMutableAttributedString(string: "Tipo Comida: ", attributes: [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 13)])
-        foodAttributedString.append(NSAttributedString(string: recipe.mealType.rawValue))
+        let foodAttributedString = NSMutableAttributedString(string: "Tipo Comida: ", attributes: [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 11)])
+        foodAttributedString.append(NSMutableAttributedString(string: recipe.mealType.rawValue, attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 11)]))
         cell.titleSecondLabel.attributedText = foodAttributedString
         
-        let timePreparationAttributedString = NSMutableAttributedString(string: "Tiempo Preparación: ", attributes: [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 13)])
-        timePreparationAttributedString.append(NSAttributedString(string: String("\(recipe.preparationTime) min.")))
+        let timePreparationAttributedString = NSMutableAttributedString(string: "Tiempo Preparación: ", attributes: [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 11)])
+        timePreparationAttributedString.append(NSMutableAttributedString(string: "\(recipe.preparationTime)", attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 11)]))
         cell.titleThirdLabel.attributedText = timePreparationAttributedString
         
         return cell

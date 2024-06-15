@@ -156,25 +156,28 @@ class WorkoutViewController: UIViewController {
     
     private func generateRoutineText(routine: Training) -> NSAttributedString {
         let titleAttributes: [NSAttributedString.Key: Any] = [
-            .font: UIFont.boldSystemFont(ofSize: 18),
+            .font: UIFont.boldSystemFont(ofSize: 20),
             .paragraphStyle: NSMutableParagraphStyle().centered()]
         let titleString = NSAttributedString(string: "Detalles\n\n", attributes: titleAttributes)
         let boldAttributes: [NSAttributedString.Key: Any] = [
-            .font: UIFont.boldSystemFont(ofSize: 13)]
+            .font: UIFont.boldSystemFont(ofSize: 16)]
+        let normalAttributes: [NSAttributedString.Key: Any] = [
+            .font: UIFont.systemFont(ofSize: 16)]
+        
         let attributedString = NSMutableAttributedString()
         attributedString.append(titleString)
         attributedString.append(NSAttributedString(string: "Nombre: ", attributes: boldAttributes))
-        attributedString.append(NSAttributedString(string: "\(routine.name).\n\n"))
+        attributedString.append(NSAttributedString(string: "\(routine.name).\n\n", attributes: normalAttributes))
         attributedString.append(NSAttributedString(string: "Descripción: ", attributes: boldAttributes))
-        attributedString.append(NSAttributedString(string: "\(routine.description).\n\n"))
+        attributedString.append(NSAttributedString(string: "\(routine.description).\n\n", attributes: normalAttributes))
         attributedString.append(NSAttributedString(string: "Objetivos: ", attributes: boldAttributes))
-        attributedString.append(NSAttributedString(string: "\(routine.goals.rawValue).\n\n"))
+        attributedString.append(NSAttributedString(string: "\(routine.goals.rawValue).\n\n", attributes: normalAttributes))
         attributedString.append(NSAttributedString(string: "Duración: ", attributes: boldAttributes))
-        attributedString.append(NSAttributedString(string: "\(routine.durationInWeeks) semanas.\n\n"))
+        attributedString.append(NSAttributedString(string: "\(routine.durationInWeeks) semanas.\n\n", attributes: normalAttributes))
         attributedString.append(NSAttributedString(string: "Intensidad: ", attributes: boldAttributes))
-        attributedString.append(NSAttributedString(string: "\(routine.intensity.rawValue).\n\n"))
+        attributedString.append(NSAttributedString(string: "\(routine.intensity.rawValue).\n\n", attributes: normalAttributes))
         attributedString.append(NSAttributedString(string: "Público: ", attributes: boldAttributes))
-        attributedString.append(NSAttributedString(string: "\(routine.targetAudience.rawValue).\n\n"))
+        attributedString.append(NSAttributedString(string: "\(routine.targetAudience.rawValue).\n\n", attributes: normalAttributes))
         
         return attributedString
     }
@@ -214,13 +217,13 @@ extension WorkoutViewController: UITableViewDelegate, UITableViewDataSource {
         let isRestDay = training.restDays.contains(day)
         let exerciseDay = training.exerciseDays.first(where: { $0.day == day })
         
-        let dayText = NSMutableAttributedString(string: day.rawValue, attributes: [.font: UIFont.boldSystemFont(ofSize: 16)])
+        let dayText = NSMutableAttributedString(string: day.rawValue, attributes: [.font: UIFont.boldSystemFont(ofSize: 18)])
         
         if isRestDay {
-            dayText.append(NSAttributedString(string: ": Descanso"))
+            dayText.append(NSAttributedString(string: ": Descanso", attributes: [.font: UIFont.systemFont(ofSize: 18)]))
         } else if let exerciseDay = exerciseDay {
             let muscles = exerciseDay.muscleGroup.map { $0.rawValue }.joined(separator: ", ")
-            dayText.append(NSAttributedString(string: ": \(muscles)"))
+            dayText.append(NSAttributedString(string: ": \(muscles)", attributes: [.font: UIFont.systemFont(ofSize: 18)]))
         }
         
         cell.textLabel?.attributedText = dayText

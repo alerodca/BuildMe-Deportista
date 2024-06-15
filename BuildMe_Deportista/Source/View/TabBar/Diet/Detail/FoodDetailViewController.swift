@@ -65,35 +65,38 @@ class FoodDetailViewController: UIViewController {
             .paragraphStyle: NSMutableParagraphStyle().centered()
         ]
         let boldAttributes: [NSAttributedString.Key: Any] = [
-            .font: UIFont.boldSystemFont(ofSize: 13)
+            .font: UIFont.boldSystemFont(ofSize: 15)
+        ]
+        let normalAttributes: [NSAttributedString.Key: Any] = [
+            .font: UIFont.systemFont(ofSize: 15)
         ]
         
         let titleString = NSAttributedString(string: "Detalles\n", attributes: titleAttributes)
         let attributedString = NSMutableAttributedString()
         attributedString.append(titleString)
         attributedString.append(NSAttributedString(string: "Ingredientes: ", attributes: boldAttributes))
-        attributedString.append(NSAttributedString(string: "\(recipe.ingredients.joined(separator: ", ")).\n\n"))
+        attributedString.append(NSAttributedString(string: "\(recipe.ingredients.joined(separator: ", ")).\n\n", attributes: normalAttributes))
         attributedString.append(NSAttributedString(string: "Tipo Comida: ", attributes: boldAttributes))
-        attributedString.append(NSAttributedString(string: "\(recipe.mealType.rawValue).\n\n"))
+        attributedString.append(NSAttributedString(string: "\(recipe.mealType.rawValue).\n\n", attributes: normalAttributes))
         attributedString.append(NSAttributedString(string: "Tiempo Preparación: ", attributes: boldAttributes))
-        attributedString.append(NSAttributedString(string: "\(recipe.preparationTime)min.\n\n"))
+        attributedString.append(NSAttributedString(string: "\(recipe.preparationTime)min.\n\n", attributes: normalAttributes))
         attributedString.append(NSAttributedString(string: "Raciones: ", attributes: boldAttributes))
-        attributedString.append(NSAttributedString(string: "\(recipe.servings).\n\n"))
+        attributedString.append(NSAttributedString(string: "\(recipe.servings).\n\n", attributes: normalAttributes))
         
         if let tips = recipe.tips {
             attributedString.append(NSAttributedString(string: "Tips: ", attributes: boldAttributes))
-            attributedString.append(NSAttributedString(string: "\(String.removeOptional(from: recipe.tips ?? "")).\n\n"))
+            attributedString.append(NSAttributedString(string: "\(String.removeOptional(from: recipe.tips ?? "No hay tips.")).\n\n", attributes: normalAttributes))
         }
         
         attributedString.append(NSAttributedString(string: "Valores Nutricionales: ", attributes: boldAttributes))
         attributedString.append(NSAttributedString(string: "Calorías: ", attributes: boldAttributes))
-        attributedString.append(NSAttributedString(string: "\(recipe.nutritionalValues.calories)kcal, "))
+        attributedString.append(NSAttributedString(string: "\(recipe.nutritionalValues.calories)kcal, ", attributes: normalAttributes))
         attributedString.append(NSAttributedString(string: "Proteínas: ", attributes: boldAttributes))
-        attributedString.append(NSAttributedString(string: "\(recipe.nutritionalValues.protein)g, "))
+        attributedString.append(NSAttributedString(string: "\(recipe.nutritionalValues.protein)g, ", attributes: normalAttributes))
         attributedString.append(NSAttributedString(string: "Grasas: ", attributes: boldAttributes))
-        attributedString.append(NSAttributedString(string: "\(recipe.nutritionalValues.fat)g, "))
+        attributedString.append(NSAttributedString(string: "\(recipe.nutritionalValues.fat)g, ", attributes: normalAttributes))
         attributedString.append(NSAttributedString(string: "Carbohidratos: ", attributes: boldAttributes))
-        attributedString.append(NSAttributedString(string: "\(recipe.nutritionalValues.carbohydrates)g."))
+        attributedString.append(NSAttributedString(string: "\(recipe.nutritionalValues.carbohydrates)g.", attributes: normalAttributes))
         
         recipeDataTextView.attributedText = attributedString
         recipeDataTextView.isEditable = false

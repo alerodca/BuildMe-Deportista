@@ -162,15 +162,17 @@ class DietViewController: UIViewController {
             .paragraphStyle: NSMutableParagraphStyle().centered()]
         let titleString = NSAttributedString(string: "Detalles\n\n", attributes: titleAttributes)
         let boldAttributes: [NSAttributedString.Key: Any] = [
-            .font: UIFont.boldSystemFont(ofSize: 13)]
+            .font: UIFont.boldSystemFont(ofSize: 18)]
+        let regularAttributes: [NSAttributedString.Key: Any] = [
+            .font: UIFont.systemFont(ofSize: 18)]
         let attributedString = NSMutableAttributedString()
         attributedString.append(titleString)
         attributedString.append(NSAttributedString(string: "Nombre: ", attributes: boldAttributes))
-        attributedString.append(NSAttributedString(string: "\(diet.name).\n\n"))
+        attributedString.append(NSAttributedString(string: "\(diet.name).\n\n", attributes: regularAttributes))
         attributedString.append(NSAttributedString(string: "Descripción: ", attributes: boldAttributes))
-        attributedString.append(NSAttributedString(string: "\(diet.description).\n\n"))
+        attributedString.append(NSAttributedString(string: "\(diet.description).\n\n", attributes: regularAttributes))
         attributedString.append(NSAttributedString(string: "Duración: ", attributes: boldAttributes))
-        attributedString.append(NSAttributedString(string: "\(diet.durationInWeeks) semanas.\n\n"))
+        attributedString.append(NSAttributedString(string: "\(diet.durationInWeeks) semanas.\n\n", attributes: regularAttributes))
         return attributedString
     }
     
@@ -206,7 +208,7 @@ extension DietViewController: UITableViewDelegate, UITableViewDataSource {
             return cell
         }
         
-        let dayText = NSMutableAttributedString(string: day.rawValue, attributes: [.font: UIFont.boldSystemFont(ofSize: 16)])
+        let dayText = NSMutableAttributedString(string: day.rawValue, attributes: [.font: UIFont.boldSystemFont(ofSize: 20)])
         
         cell.textLabel?.attributedText = dayText
         return cell

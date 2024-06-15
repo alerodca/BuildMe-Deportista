@@ -142,15 +142,15 @@ extension ExerciseDayViewController: UITableViewDataSource, UITableViewDelegate 
         let exercise = exerciseDay.exercises[indexPath.row]
         
         let nameAttributedString = NSMutableAttributedString(string: "Nombre: ", attributes: [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 13)])
-        nameAttributedString.append(NSAttributedString(string: exercise.name))
+        nameAttributedString.append(NSMutableAttributedString(string: exercise.name, attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 13)]))
         cell.titleOneLabel.attributedText = nameAttributedString
         
         let setsAttributedString = NSMutableAttributedString(string: "Series: ", attributes: [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 13)])
-        setsAttributedString.append(NSAttributedString(string: String(exercise.sets)))
+        setsAttributedString.append(NSMutableAttributedString(string: "\(exercise.sets)", attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 13)]))
         cell.titleSecondLabel.attributedText = setsAttributedString
         
         let repsAttributedString = NSMutableAttributedString(string: "Reps: ", attributes: [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 13)])
-        repsAttributedString.append(NSAttributedString(string: String(exercise.reps)))
+        repsAttributedString.append(NSMutableAttributedString(string: "\(exercise.reps)", attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 13)]))
         cell.titleThirdLabel.attributedText = repsAttributedString
         
         cell.imageViewCell.loadImage(from: exercise.image)
