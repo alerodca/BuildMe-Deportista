@@ -1,0 +1,52 @@
+LICENCIA DE USO PRIVATIVO
+
+BUILDME
+
+1. TITULAR DE LA LICENCIA
+
+Esta licencia de uso privativo es otorgada por Alejandro Rodríguez Cañete (en adelante, "el Licenciante") en favor del usuario (en adelante, "el Usuario") de las aplicaciones BuildMe (App Entrenador y App Deportista) (en adelante, "el Software").
+
+2. PROPIEDAD INTELECTUAL
+
+El Licenciante es el único y exclusivo titular de todos los derechos de propiedad intelectual e industrial sobre el Software, incluyendo pero no limitado a, los derechos de autor, marcas registradas, secretos comerciales, know-how y cualquier otro derecho de propiedad.
+
+3. OTORGAMIENTO DE LA LICENCIA
+
+Sujeto a los términos y condiciones de esta licencia, el Licenciante otorga al Usuario una licencia no exclusiva, intransferible y revocable para usar el Software exclusivamente para fines personales y no comerciales.
+
+4. USOS PERMITIDOS Y RESTRICCIONES
+
+- El Usuario puede descargar, instalar y utilizar el Software en sus dispositivos personales.
+- El Usuario no puede:
+  - Copiar, distribuir, modificar, descompilar, realizar ingeniería inversa, desensamblar o crear obras derivadas del Software.
+  - Usar el Software con fines comerciales o para cualquier propósito que no sea autorizado expresamente por esta licencia.
+  - Transferir, vender, arrendar, sublicenciar o de otra manera ceder sus derechos sobre el Software a terceros.
+
+5. ACTUALIZACIONES Y SOPORTE
+
+El Licenciante no tiene la obligación de proporcionar actualizaciones, mejoras o soporte técnico para el Software. Sin embargo, cualquier actualización o mejora que se proporcione será considerada como parte del Software y estará sujeta a los términos de esta licencia.
+
+6. LIMITACIÓN DE RESPONSABILIDAD
+
+El Software se proporciona "tal cual", sin garantías de ningún tipo, ya sean expresas o implícitas. En ningún caso, el Licenciante será responsable de ningún daño, incluyendo pero no limitado a, daños directos, indirectos, incidentales, especiales o consecuentes que surjan del uso o la imposibilidad de uso del Software.
+
+7. TERMINACIÓN
+
+Esta licencia es efectiva hasta que sea terminada. El Licenciante puede terminar esta licencia en cualquier momento si el Usuario incumple cualquiera de los términos de la misma. Al término de la licencia, el Usuario deberá desinstalar y destruir todas las copias del Software en su posesión.
+
+8. LEY APLICABLE
+
+Esta licencia se regirá e interpretará de acuerdo con las leyes de [inserte su jurisdicción]. Cualquier disputa que surja en relación con esta licencia será sometida a la jurisdicción exclusiva de los tribunales de [inserte su jurisdicción].
+
+9. ACEPTACIÓN
+
+Al descargar, instalar o usar el Software, el Usuario reconoce que ha leído, comprendido y acepta estar obligado por los términos y condiciones de esta licencia.
+
+---
+
+Alejandro Rodríguez Cañete  
+2024
+
+---
+
+Esta licencia de uso privativo está diseñada para proteger los derechos del Licenciante mientras permite al Usuario utilizar el Software bajo ciertas condiciones. Es importante que el Usuario lea y entienda estos términos antes de utilizar el Software.
